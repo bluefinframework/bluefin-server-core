@@ -1,0 +1,21 @@
+
+#bluefin启动的host
+export BLUEFIN_SERVER_HOST="127.0.0.1"
+
+#bluefin启动的端口
+export BLUEFIN_SERVER_PORT="2556"
+
+#定义对外公开的根url地址，当使用Docker部署或使用Nginx之类端口转发之辈，一定要注意定义该值，apk的下载链接会基于该值
+export BLUEFIN_BASE_URL="http://127.0.0.1:2556"
+
+#定义apk与mapping文件的存储路径，这是Bluefin的核心目录
+export BLUEFIN_FILE_STORE_PATH="/Users/saymagic/.bluefin/"
+
+#用于存放在解析apk或者retrace时产生的临时文件
+export BLUEFIN_FILE_TMP_PATH="/Users/saymagic/.bluefin/tmp"
+
+#Android sdk的目录，用来获取retrace 文件
+export ANDROID_HOME="/Users/saymagic/.bluefin/tmp/"
+
+#apk解析完毕后的hook回调地址，支持添加多个，用,分隔
+export BLUEFIN_HOOK_URLS=""

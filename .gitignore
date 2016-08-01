@@ -1,0 +1,24 @@
+# Compiled Code #
+*.class
+*/target/**
+
+# Package Files #
+*.war
+*.ear
+
+# Log Files #
+*.log
+
+# IntelliJ Files #
+.idea
+*.iml
+*.ipr
+*.iws
+
+/.mvn
+
+# System Files #
+.DS_Store
+
+tmp_file/**
+target/**
