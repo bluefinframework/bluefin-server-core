@@ -12,7 +12,7 @@
 
 ## Useage
 
-Bluefin Server based on Spring Boot development using Maven build. So be sure to run the machine installed Java environment, Maven environment, if you need to restore the confusing information, but also need to configure the `ANDROID_HOME` environment variable.
+Bluefin Server based on Spring Boot development and use Maven for building. So be sure to run the machine installed Java environment, Maven environment, if you need to restore the confusing information, but also need to configure the `ANDROID_HOME` environment variable.
 
 
 ### Parameter Configuration
@@ -39,11 +39,11 @@ For more information about the parameters, see the table below:
 
 ### Run with maven
 
-* If the clone source, run in the source directory
+* If you clone the source, run in the source directory
 
  		mvn  spring-boot:run
  	
-The default will open  Bluefin services with port 2556 in current machine.
+Default will open Bluefin services with port 2556 in current machine.
 
 ### Run with Docker
 
@@ -51,12 +51,12 @@ The default will open  Bluefin services with port 2556 in current machine.
 
 ##Skills
 
-* Package name and id co-locate a apk file, the id is apk to define, Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinidentify ` in `meta-data` label  would be as the id, generally recommended using the timestamp as the id and dynamically to modify this value at the time of packaging. If `bluefinidentify` label does not exist, Bluefin use this apk's version code as id, such harm would be covered relationship when package a same version multiple times.
+* Package name and id co-locate a apk file, different apk should define different id, Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinidentify ` in `meta-data` label  , the value would be as the id, generally recommended using the timestamp as the id and dynamically to modify this value at the time of packaging. If `bluefinidentify` label does not exist, Bluefin use this apk's version code as id, such harm would be covered relationship when package a same version multiple times.
 
 
-* Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinUpdateInfo` in `meta-data` label would be as the update information，If the value exists, the value would return when you call  query interface.
+* Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinUpdateInfo` in `meta-data` label , the value would be as the update information，If the value exists, the value would return when you call  query interface.
 
-* Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinExtData` in `meta-data` label would be as the additional information，If the value exists, the value would return when you call  query interface.
+* Bluefin would parses `AndroidManifest.xml` file and the name of `bluefinExtData` in `meta-data` label , the value would be as the additional information，If the value exists, the value would return when you call  query interface.
 
 
 
