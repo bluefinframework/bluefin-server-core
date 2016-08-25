@@ -49,7 +49,7 @@ Default will open Bluefin services with port 2556 in current machine.
 
 ### Run with Docker
 
-	docker run -it -p 2556:2556 -v $(pwd):/root saymagic/bluefin:v1.0
+	docker run -it -p 2556:2556 -v $(pwd):/root saymagic/bluefin:v1.0.1
 
 ##Skills
 

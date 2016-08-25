@@ -16,3 +16,8 @@ deploy:
   on:
     tags: true
     all_branches: true
+
+after_deploy:
+- mvn docker:build
+- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- docker push saymagic/bluefin
