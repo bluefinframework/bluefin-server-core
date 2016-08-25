@@ -1,4 +1,6 @@
-# Bluefin 
+[![Build Status](https://travis-ci.org/bluefinframework/bluefin-server-core.svg?branch=master)](https://travis-ci.org/bluefinframework/bluefin-server-core)
+
+# Bluefin
 > Service for distribution apk.
 
 

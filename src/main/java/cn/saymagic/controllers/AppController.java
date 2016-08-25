@@ -49,5 +49,17 @@ public class AppController {
     }
 
 
+    @RequestMapping(value = "/apks/", method = {RequestMethod.GET})
+    public
+    @ResponseBody
+    DeferredResult<String> doGetAllApks() {
+        DeferredResult<String> deferredResult = new DeferredResult<String>();
+        mFileService.doGetAllApkSimpleInfos()
+                .subscribeOn(Schedulers.io())
+                .<BaseWrapper>subscribe(result -> deferredResult.setResult(String.valueOf(result)),
+                        error -> deferredResult.setErrorResult(error));
+        return deferredResult;
+    }
+
 
 }

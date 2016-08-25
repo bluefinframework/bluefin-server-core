@@ -136,7 +136,7 @@ public abstract class BaseWrapper {
     }
 
     public String getBasePath() {
-        return File.separator  + File.separator + getPackageName() + File.separator
+        return File.separator   + getPackageName() + File.separator
                 + getIdentify() + File.separator;
     }
 

@@ -1,4 +1,6 @@
-#Bluefin 
+[![Build Status](https://travis-ci.org/bluefinframework/bluefin-server-core.svg?branch=master)](https://travis-ci.org/bluefinframework/bluefin-server-core)
+
+#Bluefin
 > Bluefin是一个致力于简便开发与测试人员分发APK 文件的微服务。
 
 

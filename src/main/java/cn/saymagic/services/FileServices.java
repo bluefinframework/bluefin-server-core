@@ -6,13 +6,16 @@ import cn.saymagic.error.GlobalError;
 import cn.saymagic.rx.transformer.LastModifiedTransformer;
 import cn.saymagic.services.hook.UploadApkHookService;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import rx.Observable;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class FileServices {
 
     @Autowired
     private UploadApkHookService mUploadApkHookService;
+
+    @Autowired
+    private InfoService mInfoService;
 
     public Observable<File> getFileInputStream(String product, String identify) throws FileNotFoundException {
         return Observable.<File>create(subscriber -> {
@@ -189,4 +195,16 @@ public class FileServices {
         return null;
     }
 
+    public Observable<JSONArray> doGetAllApkSimpleInfos() {
+        return Observable.just(new File(getPath()))
+                .map(file -> file.list())
+                .concatMap(files -> Observable.from(files))
+                .reduce(new JSONArray(), (jsonArray, s) -> {
+                    try {
+                        return jsonArray.put(new JSONObject(mInfoService.getLastestInfo(s).toBlocking().first()));
+                    } catch (Exception e) {
+                        return jsonArray;
+                    }
+                });
+    }
 }
