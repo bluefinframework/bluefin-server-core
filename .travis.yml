@@ -6,4 +6,13 @@ services:
 - docker
 
 install: true
-script: mvn spring-boot:run
+script: mvn package
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: ${ACCESS_TOKEN}
+  file: target/bluefin.jar
+  on:
+    tags: true
+    all_branches: true
