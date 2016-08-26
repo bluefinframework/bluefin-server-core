@@ -120,10 +120,4 @@ public class ResourceFetcher {
         }
     }
 
-    public static void main(String[] args)
-            throws ParserConfigurationException, SAXException, IOException {
-        ResourceFetcher fetcher = new ResourceFetcher();
-        fetcher.fetchSystemAttrIds();
-        //fetcher.fetchSystemStyle();
-    }
 }
