@@ -24,7 +24,8 @@ public class ApkPraserService implements IPraserService {
     @Override
     public BaseWrapper extractInfoFromFile(File file) throws IOException {
         Apk apk =  new Apk(file);
-        apk.setDownloadUrl(mBaseurl + "/api/v1/download/" + apk.getPackageName() + "/" + apk.getVersionCode());
+        apk.setDownloadUrl(mBaseurl + "/api/v1/download/" + apk.getPackageName() + "/" + apk.getIdentify() + ".apk");
+        apk.setIconUrl(mBaseurl + "/api/v1/download/" + apk.getPackageName() + "/" + apk.getIdentify() + ".png");
         return apk;
     }
 

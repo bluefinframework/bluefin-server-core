@@ -27,7 +27,7 @@ public class MappingController {
     private MappingService mMappingService;
 
     @ResponseBody
-    @RequestMapping(value = "/mapping/{package}/{identify}", method = {RequestMethod.POST})
+    @RequestMapping(value = "/{package}/{identify}/mapping", method = {RequestMethod.POST})
     public DeferredResult<String> doParsingMappingString(@PathVariable("package") String packageName, @PathVariable("identify") String version, @RequestBody String cipher) throws IOException {
         DeferredResult<String> deferredResult = new DeferredResult<String>();
         Observable<String> observable;

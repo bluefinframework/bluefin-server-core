@@ -24,7 +24,7 @@ public class InfoController {
     @Autowired
     private InfoService mInfoService;
 
-    @RequestMapping(value = "/info/{app}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/{app}/info", method = {RequestMethod.GET})
     public DeferredResult<String> getLastInfo(@PathVariable("app") String app) {
         DeferredResult result = new DeferredResult();
         mInfoService.getLastestInfo(app)
@@ -34,7 +34,7 @@ public class InfoController {
         return result;
     }
 
-    @RequestMapping(value = "/info/{app}/{identify}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/{app}/{identify}/info", method = {RequestMethod.GET})
     public DeferredResult<String> getInfo(@PathVariable("app") String app, @PathVariable("identify") String identify) {
         DeferredResult result = new DeferredResult();
         mInfoService.getAppInfo(app, identify)
@@ -44,7 +44,7 @@ public class InfoController {
         return result;
     }
 
-    @RequestMapping(value = "/list/{app}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/{app}/list", method = {RequestMethod.GET})
     public @ResponseBody
     DeferredResult<String> getAllVersionInfos(@PathVariable("app") String app) {
         DeferredResult<String> result = new DeferredResult();

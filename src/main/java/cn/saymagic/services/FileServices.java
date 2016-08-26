@@ -6,6 +6,7 @@ import cn.saymagic.error.GlobalError;
 import cn.saymagic.rx.transformer.LastModifiedTransformer;
 import cn.saymagic.services.hook.UploadApkHookService;
 import org.apache.commons.io.FileUtils;
+import org.apache.velocity.texen.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ import static cn.saymagic.config.FileConfig.*;
 
 /**
  * Created by saymagic on 16/5/20.
- *
+ * <p>
  * Service for getting file info.
  */
 @Service
@@ -41,12 +42,12 @@ public class FileServices {
     @Autowired
     private InfoService mInfoService;
 
-    public Observable<File> getFileInputStream(String product, String identify) throws FileNotFoundException {
+    public Observable<File> getFileInputStream(String product, String identify, FilenameFilter filter ) throws FileNotFoundException {
         return Observable.<File>create(subscriber -> {
             String path = getPath() + File.separator + product + File.separator + identify;
             File file = new File(path);
             if (file.isDirectory()) {
-                File[] files = file.listFiles((dir, aim) -> aim.endsWith(".apk"));
+                File[] files = file.listFiles(filter);
                 if (files != null && files.length > 0) {
                     List<File> fileList = Arrays.asList((files));
                     fileList.forEach(subscriber::onNext);
@@ -103,6 +104,7 @@ public class FileServices {
                     try {
                         copyTmpFile(baseWrapper);
                         writeInfoToFile(baseWrapper);
+                        writeIconToFile(baseWrapper);
                         return Observable.just(baseWrapper);
                     } catch (IOException e) {
                         return Observable.error(new GlobalError(GlobalError.IO_ERROR, e));
@@ -115,9 +117,16 @@ public class FileServices {
         return observable;
     }
 
+    private void writeIconToFile(BaseWrapper baseWrapper) throws IOException {
+        File file = new File(getPath() + baseWrapper.getAimIconPath());
+        if (file.exists()) {
+            file.delete();
+        }
+        FileUtils.copyInputStreamToFile(new ByteArrayInputStream(baseWrapper.getIconByte()), file);
+    }
 
     public Observable<File> getMappingFile(String app, String identify) {
-        return  Observable.<File>create(subscriber -> {
+        return Observable.<File>create(subscriber -> {
             String path = getPath() + File.separator + app + File.separator + identify + File.separator;
             File file = new File(path);
             if (file.exists() || file.isDirectory()) {
@@ -155,7 +164,11 @@ public class FileServices {
     }
 
     private void writeInfoToFile(BaseWrapper baseWrapper) throws IOException, JSONException {
-        FileUtils.write(new File(getPath() + baseWrapper.getAimInfoPath(getInfoname())), baseWrapper.toJson());
+        File file = new File(getPath() + baseWrapper.getAimInfoPath(getInfoname()));
+        if (file.exists()) {
+            file.delete();
+        }
+        FileUtils.write(file, baseWrapper.toJson());
     }
 
     private void copyTmpFile(BaseWrapper baseWrapper) throws IOException {
@@ -171,7 +184,7 @@ public class FileServices {
         }
         long time = System.currentTimeMillis();
         String fileName = getTmp() + File.separator + time + "-" + originName;
-        File file =  new File(fileName);
+        File file = new File(fileName);
         if (!file.exists()) {
             try {
                 file.createNewFile();

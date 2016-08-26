@@ -40,16 +40,25 @@ public class AppController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/download/{app}/{version}", method = {RequestMethod.GET})
-    public void doGetApkFile(@PathVariable("app") String app, @PathVariable("version") String version, HttpServletResponse response) throws IOException {
-        mFileService.getFileInputStream(app, version)
+    @RequestMapping(value = "/download/{app}/{identify}.apk", method = {RequestMethod.GET})
+    public void doGetApkFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
+        mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".apk")))
+                .toBlocking()
+                .subscribe(file -> FileUtil.writeFileToHttpServletResponse(file, response),
+                        error -> response.setStatus(HttpStatus.SC_NOT_FOUND));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/download/{app}/{identify}.png", method = {RequestMethod.GET})
+    public void doGetIconFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
+        mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".png")))
                 .toBlocking()
                 .subscribe(file -> FileUtil.writeFileToHttpServletResponse(file, response),
                         error -> response.setStatus(HttpStatus.SC_NOT_FOUND));
     }
 
 
-    @RequestMapping(value = "/apks/", method = {RequestMethod.GET})
+    @RequestMapping(value = "/apks", method = {RequestMethod.GET})
     public
     @ResponseBody
     DeferredResult<String> doGetAllApks() {

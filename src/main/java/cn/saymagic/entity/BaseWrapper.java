@@ -15,6 +15,10 @@ import java.util.Objects;
  */
 public abstract class BaseWrapper {
 
+    protected byte[] mIcon;
+
+    protected String mName;
+
     protected double mSize;
 
     protected String mQrlink;
@@ -32,6 +36,8 @@ public abstract class BaseWrapper {
     protected String mPackageName;
 
     protected String mDownloadUrl;
+
+    protected String mIconUrl;
 
     protected File mFile;
 
@@ -135,9 +141,25 @@ public abstract class BaseWrapper {
         this.mFile = mFile;
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
+    }
+
     public String getBasePath() {
         return File.separator   + getPackageName() + File.separator
                 + getIdentify() + File.separator;
+    }
+
+    public byte[] getIconByte() {
+        return mIcon;
+    }
+
+    public void setIconByte(byte[] iconByte) {
+        this.mIcon = iconByte;
     }
 
     public String getAimFilePath() {
@@ -148,12 +170,24 @@ public abstract class BaseWrapper {
         return getBasePath() + infoName;
     }
 
+    public String getAimIconPath() {
+        return getBasePath() + System.currentTimeMillis() + "-" + getIdentify() + ".png";
+    }
+
     public File getMapping() {
         return mMapping;
     }
 
     public void setMapping(File mapping) {
         this.mMapping = mapping;
+    }
+
+    public String getIconUrl() {
+        return mIconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.mIconUrl = iconUrl;
     }
 
     public String getMappingPath() {
@@ -173,6 +207,8 @@ public abstract class BaseWrapper {
         this.mDownloadUrl = mDownloadUrl;
     }
 
+
+
     public String getFileMd5() {
         return mFileMd5;
     }
@@ -191,6 +227,7 @@ public abstract class BaseWrapper {
         object.put("versionCode", getVersionCode());
         object.put("updateTime", getUpdateTime());
         object.put("qrlink", getQrlink());
+        object.put("name", getName());
 //        object.put("apkPath", getAimFilePath());
 //        object.put("mappingPath", getMappingPath());
         object.put("downloadUrl", getDownloadUrl());
@@ -198,12 +235,14 @@ public abstract class BaseWrapper {
         object.put("updateInfo", getUpdateInfo());
         object.put("extData", getExtData());
         object.put("identity", getIdentify());
+        object.put("iconUrl", getIconUrl());
         return object.toString();
     }
 
     public Map<String, Object> toMap() {
         Map<String, Object> object = new HashMap<>();
         object.put("size", getSize());
+        object.put("name", getName());
         object.put("package", getPackageName());
         object.put("minVersion", getMinVersion());
         object.put("targetVersion", getTargetVersion());
@@ -218,6 +257,8 @@ public abstract class BaseWrapper {
         object.put("updateInfo", getUpdateInfo());
         object.put("extData", getExtData());
         object.put("identity", getIdentify());
+        object.put("iconUrl", getIconUrl());
+
         return object;
     }
 
