@@ -66,7 +66,7 @@ public abstract class BaseWrapper {
         mFile = file;
         mFileMd5 = EncryUtil.getMD5(mFile);
         mSize = file.length();
-        mUpdateTime = file.lastModified();
+        mUpdateTime = System.currentTimeMillis();
     }
 
     public double getSize() {

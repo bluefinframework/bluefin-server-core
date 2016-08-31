@@ -42,7 +42,7 @@ public class FileServices {
     @Autowired
     private InfoService mInfoService;
 
-    public Observable<File> getFileInputStream(String product, String identify, FilenameFilter filter ) throws FileNotFoundException {
+    public Observable<File> getFileInputStream(String product, String identify, FilenameFilter filter) throws FileNotFoundException {
         return Observable.<File>create(subscriber -> {
             String path = getPath() + File.separator + product + File.separator + identify;
             File file = new File(path);
@@ -60,10 +60,10 @@ public class FileServices {
     }
 
 
-    public Observable handleNewMapping(MultipartFile multipartFile, BaseWrapper wrapper) {
+    public Observable handleNewMapping(MultipartFile multipartFile, Observable<BaseWrapper> wrapper) {
         Observable observable = Observable.<MultipartFile, BaseWrapper, BaseWrapper>zip(
                 Observable.just(multipartFile),
-                Observable.just(wrapper),
+                wrapper,
                 (file, info) -> {
                     String name = file.getOriginalFilename().replace(" ", "-");
                     File dstFile = new File(FileConfig.getPath() + info.getBasePath() + name);

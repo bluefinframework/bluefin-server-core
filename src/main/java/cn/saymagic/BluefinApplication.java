@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import sun.misc.Unsafe;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -76,7 +77,7 @@ public class BluefinApplication {
 
     public static String getStorePath() {
         if (TextUtil.isEmpty(BLUEFIN_FILE_STORE_PATH)) {
-            return BLUEFIN_HOME + File.separator + "file";
+            return BLUEFIN_HOME;
         }
         return BLUEFIN_FILE_STORE_PATH;
     }

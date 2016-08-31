@@ -27,8 +27,7 @@ public class MappingSaveTransformer implements Observable.Transformer<BaseWrappe
         if (mMappingFile == null) {
             return originObservable;
         }
-        BaseWrapper wrapper = originObservable.toBlocking().first();
-        return  mFileService.handleNewMapping(mMappingFile, wrapper);
+        return  mFileService.handleNewMapping(mMappingFile, originObservable);
     }
 
 }

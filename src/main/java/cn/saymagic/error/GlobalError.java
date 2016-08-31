@@ -115,6 +115,7 @@ public class GlobalError extends Exception {
     }
 
     public GlobalError (int type, Throwable throwable){
+        super(throwable);
         if (!mapping.containsKey(type)) {
             this.ERROR_TYPE = UNKNOW_ERROR;
         }

@@ -25,8 +25,10 @@ public class IndexController {
     }
 
 
-    @RequestMapping("/ping")
-    public @ResponseBody String ping(HttpServletRequest request) {
+    @RequestMapping("/api/v1/ping")
+    public
+    @ResponseBody
+    String ping(HttpServletRequest request) {
         return getPingInfo(request).toString();
     }
 
