@@ -6,6 +6,7 @@ import net.dongliu.apk.parser.bean.GlEsVersion;
 import net.dongliu.apk.parser.bean.Permission;
 import net.dongliu.apk.parser.bean.UseFeature;
 import net.dongliu.apk.parser.struct.xml.*;
+import org.apache.log4j.Logger;
 
 /**
  * trans binary xml to text
@@ -22,12 +23,15 @@ public class ApkMetaTranslator implements XmlStreamer {
         Attributes attributes = xmlNodeStartTag.getAttributes();
         switch (xmlNodeStartTag.getName()) {
             case "application":
+
                 String label = attributes.get("label");
                 if (label != null) {
+                    Logger.getLogger(this.getClass().getSimpleName()).info("application label : " + label);
                     apkMeta.setLabel(label);
                 }
                 String icon = attributes.get("icon");
                 if (icon != null) {
+                    Logger.getLogger(this.getClass().getSimpleName()).info("application icon : " + icon);
                     apkMeta.setIcon(icon);
                 }
                 break;

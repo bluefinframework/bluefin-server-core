@@ -53,6 +53,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <defaultGoal>package</defaultGoal>
     </build>
 
     <repositories>

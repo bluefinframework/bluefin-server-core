@@ -5,6 +5,7 @@ import net.dongliu.apk.parser.exception.ParserException;
 import net.dongliu.apk.parser.parser.*;
 import net.dongliu.apk.parser.struct.AndroidConstants;
 import net.dongliu.apk.parser.struct.resource.ResourceTable;
+import org.apache.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public abstract class AbstractApkParser implements Closeable {
     private Set<Locale> locales;
     private List<CertificateMeta> certificateMetaList;
 
-    private static final Locale DEFAULT_LOCALE = Locale.US;
+    private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
     /**
      * default use empty locale
@@ -176,6 +177,7 @@ public abstract class AbstractApkParser implements Closeable {
         if (iconPath == null) {
             return null;
         }
+        Logger.getLogger(this.getClass().getSimpleName()).info("getIconFile: " + iconPath);
         return new Icon(iconPath, getFileData(iconPath));
     }
 

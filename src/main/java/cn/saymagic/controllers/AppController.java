@@ -5,6 +5,7 @@ import cn.saymagic.entity.BaseWrapper;
 import cn.saymagic.rx.transformer.MappingSaveTransformer;
 import cn.saymagic.services.FileServices;
 import cn.saymagic.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
@@ -50,11 +51,16 @@ public class AppController {
 
     @ResponseBody
     @RequestMapping(value = "/download/{app}/{identify}.png", method = {RequestMethod.GET})
-    public void doGetIconFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
-        mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".png")))
-                .toBlocking()
-                .subscribe(file -> FileUtil.writeFileToHttpServletResponse(file, response),
-                        error -> response.setStatus(HttpStatus.SC_NOT_FOUND));
+    public byte[] doGetIconFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
+        File file = mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".png")))
+                .toBlocking().first();
+        if (file != null) {
+            return FileUtils.readFileToByteArray(file);
+        } else {
+            response.setStatus(HttpStatus.SC_NOT_FOUND);
+            return null;
+        }
+
     }
 
 

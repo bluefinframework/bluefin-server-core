@@ -6,16 +6,15 @@ import java.io.InputStreamReader;
 
 /**
  * Created by saymagic on 16/6/2.
- *
+ * <p>
  * Copied!
  */
 public class ShellUtil {
 
-    public static String run(String cmd){
+    public static String run(String cmd) {
         Process process = null;
         BufferedReader bri = null;
         try {
-            System.out.print(cmd);
             process = Runtime.getRuntime().exec(cmd);
             bri = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
@@ -40,7 +39,7 @@ public class ShellUtil {
 }
 
 
-class CzStreamOutput extends Thread{
+class CzStreamOutput extends Thread {
 
     public BufferedReader br;
 

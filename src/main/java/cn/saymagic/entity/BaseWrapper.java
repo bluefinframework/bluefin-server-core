@@ -1,5 +1,6 @@
 package cn.saymagic.entity;
 
+import cn.saymagic.generater.IdGenerater;
 import cn.saymagic.util.EncryUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +54,7 @@ public abstract class BaseWrapper {
 
     /**
      * Warn : this is an expensive method
+     *
      * @param file
      * @throws IOException
      * @throws NullPointerException
@@ -150,7 +152,7 @@ public abstract class BaseWrapper {
     }
 
     public String getBasePath() {
-        return File.separator   + getPackageName() + File.separator
+        return File.separator + getPackageName() + File.separator
                 + getIdentify() + File.separator;
     }
 
@@ -195,7 +197,7 @@ public abstract class BaseWrapper {
         if (mapping == null) {
             return "";
         }
-        return File.separator  + File.separator + getPackageName() + File.separator
+        return File.separator + File.separator + getPackageName() + File.separator
                 + getVersionCode() + File.separator + mapping.getName();
     }
 
@@ -206,7 +208,6 @@ public abstract class BaseWrapper {
     public void setDownloadUrl(String mDownloadUrl) {
         this.mDownloadUrl = mDownloadUrl;
     }
-
 
 
     public String getFileMd5() {

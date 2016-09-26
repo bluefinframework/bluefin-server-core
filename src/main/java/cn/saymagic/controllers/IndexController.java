@@ -32,6 +32,13 @@ public class IndexController {
         return getPingInfo(request).toString();
     }
 
+    @RequestMapping("/ping")
+    public
+    @ResponseBody
+    String indexping(HttpServletRequest request) {
+        return getPingInfo(request).toString();
+    }
+
     public JSONObject getPingInfo(HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("requestip", request.getRemoteAddr());

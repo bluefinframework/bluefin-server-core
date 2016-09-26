@@ -6,6 +6,7 @@ import net.dongliu.apk.parser.parser.*;
 import net.dongliu.apk.parser.struct.AndroidConstants;
 import net.dongliu.apk.parser.struct.resource.ResourceTable;
 import net.dongliu.apk.parser.utils.Utils;
+import org.apache.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.File;
@@ -63,6 +64,8 @@ public class ApkParser extends AbstractApkParser implements Closeable {
 
     @Override
     public byte[] getFileData(String path) throws IOException {
+        Logger.getLogger(this.getClass().getSimpleName()).info("getFileData: " + path);
+
         ZipEntry entry = zf.getEntry(path);
         if (entry == null) {
             return null;

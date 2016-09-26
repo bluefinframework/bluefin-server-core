@@ -6,7 +6,6 @@ import cn.saymagic.error.GlobalError;
 import cn.saymagic.rx.transformer.LastModifiedTransformer;
 import cn.saymagic.services.hook.UploadApkHookService;
 import org.apache.commons.io.FileUtils;
-import org.apache.velocity.texen.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import rx.Observable;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,6 +39,9 @@ public class FileServices {
 
     @Autowired
     private InfoService mInfoService;
+
+    @Autowired
+    private IdService mIdService;
 
     public Observable<File> getFileInputStream(String product, String identify, FilenameFilter filter) throws FileNotFoundException {
         return Observable.<File>create(subscriber -> {
@@ -102,7 +103,7 @@ public class FileServices {
                 }))
                 .concatMap(baseWrapper -> {
                     try {
-                        copyTmpFile(baseWrapper);
+                        moveTmpApkFileToTarget(baseWrapper);
                         writeInfoToFile(baseWrapper);
                         writeIconToFile(baseWrapper);
                         return Observable.just(baseWrapper);
@@ -171,10 +172,10 @@ public class FileServices {
         FileUtils.write(file, baseWrapper.toJson());
     }
 
-    private void copyTmpFile(BaseWrapper baseWrapper) throws IOException {
+    private void moveTmpApkFileToTarget(BaseWrapper baseWrapper) throws IOException {
         File tmpFile = baseWrapper.getFile();
         File aimFile = new File(getPath() + baseWrapper.getAimFilePath());
-        FileUtils.copyFile(tmpFile, aimFile);
+        FileUtils.moveFile(tmpFile, aimFile);
     }
 
     public synchronized File generateRandomFile(String originName) {
