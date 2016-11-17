@@ -10,9 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import rx.Observable;
+import rx.functions.Func1;
 
 import java.io.*;
 import java.util.Arrays;
@@ -40,8 +42,8 @@ public class FileServices {
     @Autowired
     private InfoService mInfoService;
 
-    @Autowired
-    private IdService mIdService;
+    @Value("${output.baseurl}")
+    private String mBaseurl;
 
     public Observable<File> getFileInputStream(String product, String identify, FilenameFilter filter) throws FileNotFoundException {
         return Observable.<File>create(subscriber -> {
@@ -152,7 +154,7 @@ public class FileServices {
                 .first()
                 .flatMap((file) -> {
                     try {
-                        return Observable.just(FileUtils.readFileToString(file));
+                        return filterInfoFile(Observable.just(FileUtils.readFileToString(file)));
                     } catch (IOException e) {
                         return Observable.error(new GlobalError(GlobalError.PACKAGE_NOT_FOUND, e));
                     }
@@ -162,6 +164,21 @@ public class FileServices {
     public Observable<String> getInfoFile(String app, String identify) {
         String path = getPath() + File.separator + app + File.separator + identify + File.separator + getInfoname();
         return getInfoFile(path);
+    }
+
+    public Observable<String> filterInfoFile(Observable<String> ori) {
+        return ori.map(s -> {
+            JSONObject jsonObject = new JSONObject(s);
+            String downloadUrl = jsonObject.optString("downloadUrl");
+            String iconUrl = jsonObject.optString("iconUrl");
+            if (downloadUrl != null) {
+                jsonObject.put("downloadUrl", mBaseurl + downloadUrl);
+            }
+            if (iconUrl != null) {
+                jsonObject.put("iconUrl", mBaseurl + iconUrl);
+            }
+            return jsonObject.toString();
+        });
     }
 
     private void writeInfoToFile(BaseWrapper baseWrapper) throws IOException, JSONException {

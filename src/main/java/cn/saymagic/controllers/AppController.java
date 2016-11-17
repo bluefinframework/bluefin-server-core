@@ -40,28 +40,28 @@ public class AppController {
         return deferredResult;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/download/{app}/{identify}.apk", method = {RequestMethod.GET})
-    public void doGetApkFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
-        mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".apk")))
-                .toBlocking()
-                .subscribe(file -> FileUtil.writeFileToHttpServletResponse(file, response),
-                        error -> response.setStatus(HttpStatus.SC_NOT_FOUND));
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/download/{app}/{identify}.png", method = {RequestMethod.GET})
-    public byte[] doGetIconFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
-        File file = mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".png")))
-                .toBlocking().first();
-        if (file != null) {
-            return FileUtils.readFileToByteArray(file);
-        } else {
-            response.setStatus(HttpStatus.SC_NOT_FOUND);
-            return null;
-        }
-
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/download/{app}/{identify}.apk", method = {RequestMethod.GET})
+//    public void doGetApkFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
+//        mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".apk")))
+//                .toBlocking()
+//                .subscribe(file -> FileUtil.writeFileToHttpServletResponse(file, response),
+//                        error -> response.setStatus(HttpStatus.SC_NOT_FOUND));
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping(value = "/download/{app}/{identify}.png", method = {RequestMethod.GET})
+//    public byte[] doGetIconFile(@PathVariable("app") String app, @PathVariable("identify") String identify, HttpServletResponse response) throws IOException {
+//        File file = mFileService.getFileInputStream(app, identify, ((dir, name) -> name.endsWith(".png")))
+//                .toBlocking().first();
+//        if (file != null) {
+//            return FileUtils.readFileToByteArray(file);
+//        } else {
+//            response.setStatus(HttpStatus.SC_NOT_FOUND);
+//            return null;
+//        }
+//
+//    }
 
 
     @RequestMapping(value = "/apks", method = {RequestMethod.GET})

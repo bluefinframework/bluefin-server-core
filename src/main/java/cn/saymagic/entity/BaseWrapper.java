@@ -52,6 +52,12 @@ public abstract class BaseWrapper {
 
     protected String mIdentify;
 
+    protected String mPackageEncryption;
+
+    protected String mIdentityEncryption;
+
+    protected String mUploadTime;
+
     /**
      * Warn : this is an expensive method
      *
@@ -152,8 +158,8 @@ public abstract class BaseWrapper {
     }
 
     public String getBasePath() {
-        return File.separator + getPackageName() + File.separator
-                + getIdentify() + File.separator;
+        return File.separator + getPackageEncryption() + File.separator
+                + getIdentityEncryption() + File.separator;
     }
 
     public byte[] getIconByte() {
@@ -165,7 +171,7 @@ public abstract class BaseWrapper {
     }
 
     public String getAimFilePath() {
-        return getBasePath() + getFile().getName();
+        return getBasePath() + getUploadTime() + ".apk";
     }
 
     public String getAimInfoPath(String infoName) {
@@ -173,7 +179,7 @@ public abstract class BaseWrapper {
     }
 
     public String getAimIconPath() {
-        return getBasePath() + System.currentTimeMillis() + "-" + getIdentify() + ".png";
+        return getBasePath() + getUploadTime()  + ".png";
     }
 
     public File getMapping() {
@@ -237,6 +243,9 @@ public abstract class BaseWrapper {
         object.put("extData", getExtData());
         object.put("identity", getIdentify());
         object.put("iconUrl", getIconUrl());
+        object.put("uploadTime", getUploadTime());
+        object.put("packageEncryption", getPackageEncryption());
+        object.put("identityEncryption", getIdentityEncryption());
         return object.toString();
     }
 
@@ -259,7 +268,9 @@ public abstract class BaseWrapper {
         object.put("extData", getExtData());
         object.put("identity", getIdentify());
         object.put("iconUrl", getIconUrl());
-
+        object.put("uploadTime", getUploadTime());
+        object.put("packageEncryption", getPackageEncryption());
+        object.put("identityEncryption", getIdentityEncryption());
         return object;
     }
 
@@ -277,5 +288,29 @@ public abstract class BaseWrapper {
 
     public void setIdentify(String mIdentify) {
         this.mIdentify = mIdentify;
+    }
+
+    public String getIdentityEncryption() {
+        return mIdentityEncryption;
+    }
+
+    public void setIdentityEncryption(String mIdentityEncryption) {
+        this.mIdentityEncryption = mIdentityEncryption;
+    }
+
+    public String getPackageEncryption() {
+        return mPackageEncryption;
+    }
+
+    public void setPackageEncryption(String mPackageEncryption) {
+        this.mPackageEncryption = mPackageEncryption;
+    }
+
+    public String getUploadTime() {
+        return mUploadTime;
+    }
+
+    public void setUploadTime(String mUploadTime) {
+        this.mUploadTime = mUploadTime;
     }
 }

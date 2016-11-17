@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rx.Observable;
 
@@ -33,7 +34,7 @@ public class InfoService {
                 .flatMap(identify -> mFileService.getInfoFile(app, identify));
     }
 
-    public Observable<String> getLastestVersion( String app) {
+    public Observable<String> getLastestVersion(String app) {
         String path = FileConfig.getPath() + File.separator + app;
         return Observable.just(path)
                 .map(File::new)
